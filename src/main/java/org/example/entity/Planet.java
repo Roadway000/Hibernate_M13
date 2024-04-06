@@ -6,6 +6,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.Constraint;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 @Data
@@ -13,10 +16,11 @@ import lombok.Data;
 @Table (name = "planet")
 public class Planet {
     @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Pattern(regexp = "^[A-Z]*[0-9]*$", message = "Planet.id {} can be only in upper case and digitas characters. For example MWA123")
     private String id;
-//    @Column (name="name", nullable = false, unique=true, columnDefinition = "varchar not null check(length(name)>0 and length(name)<501)")
+
     @Column (name="name", nullable = false, unique=true)
+    @Size(min = 1, max = 500, message = "Planet.name {} must be between 1 and 500 characters")
     private String name;
 
     public String getId() { return id; }

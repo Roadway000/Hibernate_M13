@@ -3,6 +3,7 @@ package org.example.service;
 import org.example.dao.ClientDao;
 import org.example.entity.Client;
 import org.example.hibernate.HibernateUtil;
+import org.example.validator.ClientValidator;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
@@ -14,6 +15,8 @@ public class ClientCrudService implements ClientDao {
     @Override
     public boolean insertClient(Client client) {
         boolean result = false;
+        if (client == null)
+            return false;
         try (Session session = HibernateUtil.getInstance().getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
             try {

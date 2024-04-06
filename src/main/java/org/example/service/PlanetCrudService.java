@@ -16,6 +16,8 @@ public class PlanetCrudService implements PlanetDao {
     @Override
     public boolean insertPlanet(Planet planet) {
         boolean result = false;
+        if (planet == null)
+            return false;
         try (Session session = HibernateUtil.getInstance().getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
             try {

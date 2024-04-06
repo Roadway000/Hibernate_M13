@@ -6,6 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 @Data
@@ -15,8 +16,8 @@ public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-//    @Column (name="name", nullable = false, unique=true, columnDefinition = "varchar not null check(length(name)>2 and length(name)<201)")
-    @Column
+    @Column(name="name", nullable = false, unique=true)
+    @Size(min = 3, max = 200, message = "Client.name {} must be between 3 and 200 characters")
     private String name;
 
     public void setName(String name) { this.name = name; }
