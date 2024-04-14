@@ -1,4 +1,4 @@
-insert into client (name) values
+INSERT INTO client (name) VALUES
  ('Theodore Roosevelt')
 ,('Franklin D. Roosevelt')
 ,('Harry S. Truman')
@@ -13,7 +13,7 @@ insert into client (name) values
 ,('Donald J. Trump')
 ,('Joseph R. Biden');
 
-insert into planet (id, name) values
+INSERT INTO planet (id, name) VALUES
  ('MERC234', 'MERCURY')
 ,('JUP221','JUPITER')
 ,('MRS777','MARS')
@@ -32,7 +32,7 @@ insert into planet (id, name) values
 --,('VENUS')
 --,('EARTH');
 
-insert into ticket (created_at, client_id, from_planet_id, to_planet_id) values
+INSERT INTO ticket (created_at, client_id, from_planet_id, to_planet_id) VALUES
  ('2016-08-02 14:01:01', 1, 'MERC234', 'ERZ99')
 ,('2017-01-02 12:02:27', 2, 'JUP221',  'MRS777')
 ,('2018-02-02 13:09:26', 3, 'MRS777',  'SAT064')

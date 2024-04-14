@@ -1,35 +1,39 @@
 package org.example.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.Constraint;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+@Getter
+@Setter
 @Entity
 @Table (name = "planet")
 public class Planet {
     @Id
-    @Pattern(regexp = "^[A-Z]*[0-9]*$", message = "Planet.id {} can be only in upper case and digitas characters. For example MWA123")
+    @Pattern(regexp = "^[A-Z]*[0-9]*$", message = "Planet.id {} can be only in upper case and digital characters.")
     private String id;
 
     @Column (name="name", nullable = false, unique=true)
     @Size(min = 1, max = 500, message = "Planet.name {} must be between 1 and 500 characters")
     private String name;
 
-    public String getId() { return id; }
+    @OneToMany(mappedBy = "planetTo", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Ticket> ticketsTo = new HashSet<>();
 
-    public void setId(String id) { this.id = id; }
+    @OneToMany(mappedBy = "planetFrom", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Ticket> ticketsFrom = new HashSet<>();
 
-    public String getName() { return name; }
-
-    public void setName(String name) { this.name = name; }
-
-    public String toString() { return id +", "+ name; }
+    @Override
+    public String toString() {
+        return "id:" + id + ", name:'" + name + "'";
+    }
 }

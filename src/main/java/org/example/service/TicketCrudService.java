@@ -1,30 +1,29 @@
 package org.example.service;
 
-import org.example.dao.ClientDao;
-import org.example.entity.Client;
+import org.example.dao.TicketDao;
+import org.example.entity.Planet;
 import org.example.entity.Ticket;
 import org.example.hibernate.HibernateUtil;
-import org.example.validator.ClientValidator;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.hibernate.query.Query;
 
 import java.util.List;
 import java.util.Objects;
 
-public class ClientCrudService implements ClientDao {
+public class TicketCrudService implements TicketDao {
+    private static final String SUCCESSFULLY_MESSAGE = "Ticket number '{}' successfully was {}";
     @Override
-    public boolean insertClient(Client client) {
-        boolean result = false;
-        if (client == null)
-            return false;
+    public Long insertTicket(Ticket ticket) {
+        Long result = 0L;
+        if (ticket == null)
+            return result;
         try (Session session = HibernateUtil.getInstance().getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
             try {
-                client.setId(null);
-                session.persist(client);
+                session.persist(ticket);
                 transaction.commit();
-                result = true;
+                result = ticket.getId();
+                HibernateUtil.getLogger().info(SUCCESSFULLY_MESSAGE, result, "inserted");
             } catch(Exception e) {
                 HibernateUtil.getLogger().error(e.getMessage());
                 transaction.rollback();
@@ -32,18 +31,20 @@ public class ClientCrudService implements ClientDao {
         }
         return result;
     }
+
     @Override
-    public boolean updateClient(Client client) {
+    public boolean updateTicket(Ticket ticket) {
         boolean result = false;
-        if (Objects.isNull(client.getId())) {
+        if (Objects.isNull(ticket.getId())) {
             return false;
         }
         try (Session session = HibernateUtil.getInstance().getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
             try {
-                session.merge(client);
+                session.merge(ticket);
                 transaction.commit();
                 result = true;
+                HibernateUtil.getLogger().info(SUCCESSFULLY_MESSAGE, ticket.getId(), "updated");
             } catch(Exception e) {
                 HibernateUtil.getLogger().error(e.getMessage());
                 transaction.rollback();
@@ -51,48 +52,47 @@ public class ClientCrudService implements ClientDao {
         }
         return result;
     }
+
     @Override
-    public Client getClientById(long id, boolean withTickets) {
+    public Ticket getTicketById(long id, boolean withClient, boolean withPlanet) {
         try (Session session = HibernateUtil.getInstance().getSessionFactory().openSession()) {
-            Client client = session.get(Client.class, id);
-            // TODO: for lazy loading. Initiate get tickets
-            if (withTickets) {
-                client.getTickets().forEach(Ticket::getId);
+            Ticket ticket = session.get(Ticket.class, id);
+            if (withClient) {
+                ticket.getClient();
             }
-            return client;
+            if (withPlanet) {
+                ticket.getPlanetFrom();
+                ticket.getPlanetTo();
+            }
+            return ticket;
         }
     }
+
     @Override
-    public List<Client> getClientsByName(String name) {
+    public List<Ticket> getTickets() {
         try (Session session = HibernateUtil.getInstance().getSessionFactory().openSession()) {
-            Query query = session.createQuery("FROM Client WHERE name LIKE :clientname", Client.class);
-            query.setParameter("clientname", "%"+name+"%");
-            return query.list();
+            return session.createQuery("from Ticket", Ticket.class).list();
         }
     }
+
     @Override
-    public List<Client> getClients() {
-        try (Session session = HibernateUtil.getInstance().getSessionFactory().openSession()) {
-            return session.createQuery("FROM Client", Client.class).list();
-        }
-    }
-    @Override
-    public void deleteClientById(long id) {
+    public void deleteTicketById(long id) {
         try (Session session = HibernateUtil.getInstance().getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
-            Client client = session.get(Client.class, id);
-            String name = client.getName();
-            session.remove(client);
+            Ticket ticket = session.get(Ticket.class, id);
+            session.remove(ticket);
             transaction.commit();
-            HibernateUtil.getLogger().info("Client by name {} successfully was deleted", name);
+            HibernateUtil.getLogger().info(SUCCESSFULLY_MESSAGE, id, "deleted");
         }
     }
+
     @Override
-    public void deleteClient(Client client) {
+    public void deleteTicket(Ticket ticket) {
         try (Session session = HibernateUtil.getInstance().getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
-            session.remove(client);
+            session.remove(ticket);
             transaction.commit();
+            HibernateUtil.getLogger().info(SUCCESSFULLY_MESSAGE, ticket.getId(), "deleted");
         }
     }
 }

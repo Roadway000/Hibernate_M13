@@ -13,18 +13,12 @@ b
 2src/main/java/org/example/prop/PropertyReader.java,7\3\7378b066a28cb9d351da9a60f7ae4a78f978ce71
 \
 ,src/main/java/org/example/dao/ClientDao.java,a\f\af82d3aca06bf6cf7dbea07a8f174d4d7ca239fd
-`
-0src/main/java/org/example/dao/ClientDaoImpl.java,3\7\3728ac71613af5c8da83df7f4249d4bfa79636e9
 \
 ,src/main/java/org/example/dao/PlanetDao.java,8\2\8241141926d15de6de9a900fe2cddb39065865ea
-`
-0src/main/java/org/example/dao/PlanetDaoImpl.java,0\f\0ff065e672f72f9cc661cf1de7859a4edd6391d6
 S
 #src/main/java/org/example/Main.java,0\b\0ba1b9c7a4878802f938e331cc2d8a042087ec6b
 <
 baeldung.log,6\5\655226b970846490a80f445873c87f5f53ac3122
-d
-4src/main/java/org/example/dao/ClientCrudService.java,1\4\14c0383301b2b39c7e7e883b163a2a40515fbac5
 h
 8src/main/java/org/example/service/ClientCrudService.java,9\d\9d13eb9fe29b340262493d9adf9af03b2961a658
 h
@@ -50,14 +44,6 @@ S
 #.idea/sonarlint/issuestore/index.pb,9\f\9fe84ebb15faf917b7def6236dba604453cc61e0
 h
 8src/main/java/org/example/validator/ClientValidator.java,b\2\b2ea37532c839e5d660458bf861534c7fcb9f446
-b
-2src/main/java/org/example/validator/Ð¡aseMode.java,5\3\537ecefb268bca1e6f9248922c1a034c3c5e023a
-b
-2src/main/java/org/example/validator/CheckCase.java,7\3\73340fbc3fe4cd93b3497cd0f1facf2d20449274
-k
-;src/main/java/org/example/validator/CheckCaseValidator.java,d\0\d0336f4e1915ff5908ca553e40c3bcd35b44c0e2
-a
-1src/main/java/org/example/validator/CaseMode.java,3\5\35fa94dd4bf8f16309c703a9addb716e11411b02
 h
 8src/main/java/org/example/validator/PlanetValidator.java,9\5\950f637cd82bbcdef8ef04a16da3088504edb4bd
 
@@ -132,3 +118,9 @@ G.idea/sonarlint/issuestore/9/f/9fe84ebb15faf917b7def6236dba604453cc61e0,f\0\f0
 Q.idea/sonarlint/securityhotspotstore/3/7/3728ac71613af5c8da83df7f4249d4bfa79636e9,9\7\9721f1731497d9df4498b801999add9714801b1b
 w
 G.idea/sonarlint/issuestore/4/9/496a238a6afa168dbaf6efd37bb459331589579c,6\e\6e9644ddf83ab52f39902ecdbfdf4118285ac40c
+\
+,src/main/java/org/example/entity/Ticket.java,4\5\45de5c6bd2514b4bbe8ce0d541ec6f2e1d8ab24e
+\
+,src/main/java/org/example/dao/TicketDao.java,6\9\692aea726659ad7403db5296a1b69ffad49805e4
+h
+8src/main/java/org/example/service/TicketCrudService.java,9\b\9b5bfde59d3ff910cc93df137a64247213dc0079

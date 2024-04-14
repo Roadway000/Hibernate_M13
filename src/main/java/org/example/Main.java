@@ -1,21 +1,20 @@
 package org.example;
 
-import jakarta.validation.ConstraintViolation;
-import jakarta.validation.Validation;
-import jakarta.validation.Validator;
-import jakarta.validation.ValidatorFactory;
+import org.example.entity.Ticket;
 import org.example.service.ClientCrudService;
 import org.example.service.PlanetCrudService;
 import org.example.entity.Client;
 import org.example.entity.Planet;
 import org.example.hibernate.HibernateUtil;
+import org.example.service.TicketCrudService;
 import org.example.validator.ClientValidator;
 import org.example.validator.PlanetValidator;
 import org.slf4j.Logger;
 
-import java.util.ArrayList;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
+
 
 public class Main {
     static Logger log;
@@ -57,13 +56,59 @@ public class Main {
         currentPlanet = planet;
         return planet;
     }
-
+    private static Ticket NewTicket(LocalDateTime createdAt, Client client, Planet planetFrom, Planet planetTo) {
+        Ticket ticket = new Ticket();
+        try {
+            ticket.setCreatedAt(createdAt == null ? LocalDateTime.now() : createdAt);
+            ticket.setClient(client);
+            ticket.setPlanetFrom(planetFrom);
+            ticket.setPlanetTo(planetTo);
+            return ticket;
+        } catch(Exception e) {
+            log.error("NewTicket.Exception: {}",e.getMessage());
+            return null;
+        }
+    }
     public static void main(String[] args) {
         log = HibernateUtil.getLogger();
 
         /** Instantiates each entity for CrudService */
         ClientCrudService clientDao = new ClientCrudService();
         PlanetCrudService planetDao = new PlanetCrudService();
+        TicketCrudService ticketDao = new TicketCrudService();
+
+        boolean withClient = true;
+        boolean withPlanet = true;
+        boolean withAllTickets = true;
+        /** Select a ticket with ID=1 with a reference to the customer and his flight route  */
+        Ticket ticket = ticketDao.getTicketById(1L, withClient, withPlanet);
+        log.info("ticket {} {} {} {}"
+                , ticket.toString()
+                , (withClient? ticket.getClient().toString(): "")
+                , (withPlanet? "planet from "+ticket.getPlanetFrom().toString(): "")
+                , (withPlanet? "planet to "+ticket.getPlanetTo().toString(): ""));
+
+        /** Select a client by ID=4 with a list of their tickets */
+        Client client = clientDao.getClientById(4L, withAllTickets);
+        if (withAllTickets)
+        try {
+            Set<Ticket> tickets = client.getTickets();
+            tickets.forEach(t -> log.info(t.toString()));
+        } catch(Exception e) {
+            log.error("Exception: {}",e.getMessage());
+        }
+
+        /** Buy a new Earth-Venus ticket for John F. Kennedy */
+        Client johnFKennedy = clientDao.getClientById(4L, false);
+        Planet planetFrom = planetDao.getPlanetById("ERZ99");
+        Planet planetTo = planetDao.getPlanetById("VEN66");
+        Ticket ticketJohnFKennedy = NewTicket(null, johnFKennedy, planetFrom, planetTo);
+        Long newNumberTicket = ticketDao.insertTicket(ticketJohnFKennedy);
+
+        /** Deleting a ticket of the president John F. Kennedy */
+        if (newNumberTicket>0) {
+            ticketDao.deleteTicketById(newNumberTicket);
+        }
 
         /** Attempting to create a new customer record with an invalid value */
         /** довжина поля name не відповідає потребі */
@@ -74,15 +119,15 @@ public class Main {
 
         /** Selects a list of 'Clients' by name 'Bush' */
         List<Client> clientsList = clientDao.getClientsByName("Bush");
-        clientsList.forEach(client -> log.info("client name like 'Bush' ==> {}", client));
+        clientsList.forEach(c -> log.info("client name like 'Bush' ==> {}", c));
 
         /** Selects all list of 'Clients' */
         clientsList = clientDao.getClients();
-        clientsList.forEach(client -> log.info("client list ==> {}", client));
+        clientsList.forEach(c -> log.info("client list ==> {}", c));
 
         /** Deleting Client by name 'Pablo' */
         clientsList = clientDao.getClientsByName("Pablo");
-        clientsList.forEach(client -> clientDao.deleteClientById(client.getId()));
+        clientsList.forEach(c -> clientDao.deleteClientById(c.getId()));
 
         /** Attempting to create a new "Planet" with an invalid value ID */
         planetDao.insertPlanet(NewPlanet("del111","18 Delphini b"));

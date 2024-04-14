@@ -1,16 +1,19 @@
 
-i	java:S100"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(οϋΡ$8ΈΉΐªλ1
-j	java:S100#"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ί¨πσ8»Ήΐªλ1
-o	java:S1001"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ΓαιΆύÿÿÿÿ8½Ήΐªλ1
-_
-java:S1128"CRemove this unused import 'jakarta.validation.ConstraintViolation'.(ΒΆΧ)8ΕΉΐªλ1
-W
-java:S1128":Remove this unused import 'jakarta.validation.Validation'.(ΕÒ—–8ΕΉΐªλ1
-[
-java:S1128"9Remove this unused import 'jakarta.validation.Validator'.(λªÒ†ϋÿÿÿÿ8ΕΉΐªλ1
-]
-java:S1128"@Remove this unused import 'jakarta.validation.ValidatorFactory'.(Τ•–8ΖΉΐªλ1
-M
-java:S1128"0Remove this unused import 'java.util.ArrayList'.(χ‰ξƒ8ΖΉΐªλ1
-L
-java:S1128"*Remove this unused import 'java.util.Set'.(φ²„¤ώÿÿÿÿ8ΖΉΐªλ1
+F
+java:S2629V"$Invoke method(s) only conditionally.(µΟ¥ιψÿÿÿÿ8«ον1
+i
+java:S3973]"GUse indentation to denote the code conditionally executed by this "if".(†Φ°Ωύÿÿÿÿ8«ον1
+Y
+java:S2589]"7Remove this expression which always evaluates to "true"(†Φ°Ωύÿÿÿÿ8§δον1
+`
+java:S2583W"CChange this condition so that it does not always evaluate to "true"(Σ«Μ8§δον1
+e
+java:S2583X"CChange this condition so that it does not always evaluate to "true"(α¦ό­ψÿÿÿÿ8§δον1
+e
+java:S2583Y"CChange this condition so that it does not always evaluate to "true"(Θεαύÿÿÿÿ8§δον1
+i	java:S100"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(οϋΡ$8Η«ον1
+j	java:S100""NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ί¨πσ8Λ«ον1
+o	java:S1000"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ΓαιΆύÿÿÿÿ8Ξ«ον1
+j	java:S100;"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(δζƒζ8Π«ον1
+ƒ
+java:S3457V"aNo need to call "toString()" method as formatting and string conversion is done by the Formatter.(µΟ¥ιψÿÿÿÿ8Υ«ον1
